@@ -1,0 +1,80 @@
+{% include "header.html.twig" %}
+{% include "navigation.html.twig" %}
+<main class="Site-content">
+    <section class="Section">
+        <div class="Container">
+            <div id="messages">
+                {% include "errorMessages.html.twig" %}
+                {% include "statusMessage.html.twig" %}
+            </div>
+            <form action="/view_all" method="post" enctype="multipart/form-data">
+                    <button type="submit" name="all" class="Button">View All</button>
+            </form>
+            <form action="/like" method="post" enctype="multipart/form-data">
+                <div class="InputCombo Grid-full">
+                    <label for="like" class="InputCombo-label">LIKE:</label>
+                    <input type="search" id="like" name="like" value="{{ like }}" class="InputCombo-field">
+                    <button type="submit" class="Button"><i class="fa fa-search" aria-hidden="true"></i></button>
+                </div>
+            </form>
+            <form action="/match" method="post" enctype="multipart/form-data">
+                <div class="InputCombo Grid-full">
+                    <label for="match" class="InputCombo-label">MATCH:</label>
+                    <input type="search" id="match" name="match" value="{{ match }}" class="InputCombo-field">
+                    <button type="submit" class="Button"><i class="fa fa-search" aria-hidden="true"></i></button>
+                </div>
+            </form>
+            <form action="/copy_to" method="post" enctype="multipart/form-data">
+                <div class="InputCombo Grid-full">
+                    <label for="copy_to" class="InputCombo-label">COPY_TO:</label>
+                    <input type="search" id="copy_to" name="copy_to" value="{{ copy_to }}" class="InputCombo-field">
+                    <button type="submit" class="Button"><i class="fa fa-search" aria-hidden="true"></i></button>
+                </div>
+            </form>
+            <form action="/no_cursor" method="post" enctype="multipart/form-data">
+                <div class="InputCombo Grid-full">
+                    <label for="no_cursor" class="InputCombo-label">NO_CURSOR:</label>
+                    <input type="search" id="no_cursor" name="no_cursor" value="{{ no_cursor }}" class="InputCombo-field">
+                    <button type="submit" class="Button"><i class="fa fa-search" aria-hidden="true"></i></button>
+                </div>
+            </form>
+            <form action="/paging" method="post" enctype="multipart/form-data">
+                <div class="InputCombo Grid-full">
+                    <label for="paging" class="InputCombo-label">PAGING:</label>
+                    <input type="search" id="paging" name="paging" value="{{ paging }}" class="InputCombo-field">
+                    <button type="submit" class="Button"><i class="fa fa-search" aria-hidden="true"></i></button>
+                </div>
+            </form>
+            <br>
+            <h2 class="Section-heading">List of Products</h2>
+            <div class="InputCombo Grid-full">
+                    {% include "tablestyles.html.twig" %}
+                    <table>
+                        <tr>
+                            <th>PID</th>
+                            <th>Product_name</th>
+                            <th>Price</th>
+                        </tr>
+                        {% if pageArray is defined %}
+                            {% for key, value in pageArray %}
+                                <tr>
+                                    <td>{{ pageArray[key]['idproduct'] }}</td>
+                                    <td>{{ pageArray[key]['product_name'] }}</td>
+                                    <td>{{ pageArray[key]['price'] }}</td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td> No products found in search </td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                        {% endif %}
+                    </table>
+             </div>
+        </div>
+    </section>
+</main>
+<!--script src="../src/Exercises/js/search.js"></script>-->
+{%  include "footer.html.twig"  %}

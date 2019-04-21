@@ -1,0 +1,34 @@
+{% include "header.html.twig" %}
+{% include "navigation.html.twig" %}
+<main class="Site-content">
+    <section class="Section">
+        <div class="Container">
+            <h2 class="Section-heading">Login</h2>
+            <div id="messages">
+                {% include "errorMessages.html.twig" %}
+                {% include "statusMessage.html.twig" %}
+            </div>
+            <form action="/login" method="post" id="loginform" autocomplete="off">
+                <div class="InputCombo Grid-full">
+                    <label for="email" class="InputCombo-label">Email:</label>
+                    <input type="text" id="email" name="email" value="{{ email }}" class="InputCombo-field">
+                </div>
+                <div class="InputCombo Grid-full">
+                    <label for="password" class="InputCombo-label">Password:</label>
+                    <input type="password" id="password" name="password" class="InputCombo-field">
+                </div>
+                <div class="Grid-full">
+                    <button type="submit" class="Button">Log me in</button>
+                </div>
+            </form>
+        </div>
+    </section>
+    <section class="Section">
+        <div class="Container">
+            <h2 class="Section-heading">No account<i class="fa fa-question"></i></h2>
+            <p>Register your OnlineShop account <a href="/register">here</a></p>
+        </div>
+    </section>
+</main>
+<!--<script src="../src/Exercises/js/login.js"></script>-->
+{% include "footer.html.twig" %}

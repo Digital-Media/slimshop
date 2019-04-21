@@ -1,0 +1,54 @@
+{% include "header.html.twig" %}
+{% include "navigation.html.twig" %}
+<main class="Site-content">
+    <section class="Section">
+        <div class="Container">
+            <div id="messages">
+                {% include "errorMessages.html.twig" %}
+                {% include "statusMessage.html.twig" %}
+            </div>
+            <form action="/oldsearch" method="post" enctype="multipart/form-data">
+                <div class="InputCombo Grid-full">
+                    <label for="search" class="InputCombo-label">Search:</label>
+                    <input type="search" id="search" name="search" value="{{ search }}" class="InputCombo-field">
+                    <button type="submit" class="Button"><i class="fa fa-search" aria-hidden="true"></i></button>
+                </div>
+            </form>
+            <br>
+            <h2 class="Section-heading">List of Products</h2>
+            <div class="InputCombo Grid-full">
+                <form action="/buy" method="post"  enctype="multipart/form-data" id="indexform">
+                    {% include "tablestyles.html.twig" %}
+                    <table>
+                        <tr>
+                            <th><a href="/sort/pid">PID</a></th>
+                            <th><a href="/sort/pname">Product_name</a></th>
+                            <th><a href="/sort/price">Price</a></th>
+                            <th>&nbsp;</th>
+                        </tr>
+                        {% if pageArray is defined %}
+                            {% for key, value in pageArray %}
+                                <tr>
+                                    <td>{{ pageArray[key]['idproduct'] }}</td>
+                                    <td>{{ pageArray[key]['product_name'] }}</td>
+                                    <td>{{ pageArray[key]['price'] }}</td>
+                                    <td><button id="{{ pageArray[key]['idproduct'] }}" name="pid[{{ pageArray[key]['idproduct'] }}]" type="submit" class="addtocart"><i class="fa fa-cart-plus" aria-hidden="true">&nbsp;Add To Cart</i></button></td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td> No products found in search </td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                        {% endif %}
+                    </table>
+                    {% include "pagination.html.twig" %}
+                </form>
+            </div>
+        </div>
+    </section>
+</main>
+<!--<script src="../src/Exercises/js/index.js"></script>-->
+{%  include "footer.html.twig"  %}
