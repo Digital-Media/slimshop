@@ -8,7 +8,7 @@ function sendAJAXRequest(event)
 {
     formData = new FormData(form);
 
-    xhr.open("POST", "dbajaxdemo.php", true);
+    xhr.open("POST", "/dbajaxdemo", true);
     xhr.responseType = "json";
     xhr.setRequestHeader("Accept", "application/json");
     xhr.addEventListener("load", handleResponse);
@@ -28,6 +28,7 @@ function handleResponse()
             myObj = xhr.response;
         } // otherwise we have to parse it ourselves
         else {
+            //console.log(xhr.responseText);
             myObj = JSON.parse(xhr.responseText);
         }
 

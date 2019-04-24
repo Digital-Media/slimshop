@@ -117,8 +117,8 @@ class __TwigTemplate_dc94dbaac04cf7393b30accbc2be47d6fc266abacf2a5f8036d26127213
     </section>
 </main>
 <!-- uncomment one of both for using AJAX. A submit event is registered in this case -->
-<!--<script src=\"../src/DBAccess/js/dbajaxdemo.js\"></script>-->
-<script src=\"js/dbajaxdemojquery.js\"></script>
+<script src=\"js/dbajaxdemo.js\"></script>
+<!--<script src=\"js/dbajaxdemojquery.js\"></script>-->
 ";
         // line 50
         $this->loadTemplate("footer.html.twig", "dbajaxdemoMain.html.twig", 50)->display($context);
