@@ -12,6 +12,19 @@ $app->get('/', function (Request $request, Response $response, array $args) {
 });
 
 /*
+ * /logout ist only valid if a user is logged in.
+ */
+$app->get('/logout', function (Request $request, Response $response, array $args) {
+    $this->logger->info("Slim-Skeleton '/logout' route");
+    $_SESSION = [];
+    if (isset($_COOKIE[session_name()])) {
+        setcookie(session_name(), "", time() - 86400, "/");
+    }
+    session_destroy();
+    return $this->view->render($response, 'indexMain.html.twig', $args);
+});
+
+/*
  * /dbdemo demonstrates how form data are validated and processed
  * with the normform MVC pattern.
  */
@@ -28,7 +41,10 @@ $app->get('/dbdemo', function (Request $request, Response $response, array $args
     $args['pageArray'] = $dbdemo->fillpageArray();
     return $this->view->render($response, 'dbdemoMain.html.twig', $args);
 });
-
+/*
+ * returns result view if business doesn't throw exception
+ * returns a error view if isValid() returns an error
+ */
 $app->post('/dbdemo', function (Request $request, Response $response, array $args) {
     $this->logger->info("Slim-Skeleton '/dbdemo' route");
     $dbdemo = new DBdemo($this->db, $request, $response, $this->view);
@@ -39,35 +55,41 @@ $app->post('/dbdemo', function (Request $request, Response $response, array $arg
 });
 
 /*
- * /dbajaxdemo demonstrates how form data are validated and processed
- * with the a MVC pattern, but form sent via AJAX. We no longer use
- * NormForm but Slim Controllers and Middleware and keep the normform
- * pattern in mind to know what's going on.
- */
-$app->get('/dbajaxdemo', 'DBAjaxDemo:index');
-$app->post('/dbajaxdemo', 'DBAjaxDemo:business');
-
-
-/*
- * /logout ist only valid if a user is logged in.
- */
-$app->get('/logout', function (Request $request, Response $response, array $args) {
-    $this->logger->info("Slim-Skeleton '/logout' route");
-    $_SESSION = [];
-    if (isset($_COOKIE[session_name()])) {
-        setcookie(session_name(), "", time() - 86400, "/");
-    }
-    session_destroy();
-    return $this->view->render($response, 'indexMain.html.twig', $args);
-});
-
-/*
  * /register.
  */
 $app->get('/register', function (Request $request, Response $response, array $args) {
     $this->logger->info("Slim-Skeleton '/register' route");
     return $this->view->render($response, 'registerMain.html.twig', $args);
 });
+
+$app->post('/add_user', function (Request $request, Response $response, array $args) {
+    $this->logger->info("Slim-Skeleton '/add_user' route");
+    $register = new Register($this->db, $request, $response, $this->view);
+    if ($register->isValid()) {
+        return $register->business();
+    }
+    return $register->errorView;
+});
+
+/*
+ * /dbslimdemo demonstrates how form data are validated and processed
+ * with the a MVC pattern. In this case form data are sent via AJAX.
+ * We no longer use NormForm but Slim Controllers and Middleware
+ * but keep the normform pattern in mind to know what's going on.
+ */
+$app->get('/dbslimdemo', 'DBSlimDemo:index');
+$app->post('/dbslimdemo', 'DBSlimDemo:business');
+
+/*
+ * /dbajaxdemo demonstrates how form data are validated and processed
+ * with the a MVC pattern. In this case form data are sent via AJAX.
+ * We no longer use NormForm but Slim Controllers and Middleware
+ * but keep the normform pattern in mind to know what's going on.
+ */
+$app->get('/dbajaxdemo', 'DBAjaxDemo:index');
+$app->post('/dbajaxdemo', 'DBAjaxDemo:business');
+
+
 
 /*
  * /product.
@@ -154,35 +176,15 @@ $app->post('/oldsearch', function (Request $request, Response $response, array $
     return $this->view->render($response, 'indexMain.html.twig', $args);
 });
 
-$app->post('/login', function (Request $request, Response $response, array $args) {
-    $this->logger->info("Slim-Skeleton '/login' route");
-    $login = new Login($this->db, $request, $response, $this->view);
-    if ($login->isValid()) {
-        $login->business();
-        unset($_SESSION['errors']);
-        return $this->view->render($response, 'indexMain.html.twig', $args);
-    }
-    $args = array( 'errorMessages' => $_SESSION['errors'],
-                   'email' => $request->getParam('email'));
-    return $this->view->render($response, 'loginMain.html.twig', $args);
-});
+
 
 $app->post('/add_product', function (Request $request, Response $response, array $args) {
     $this->logger->info("Slim-Skeleton '/add_product' route");
     return $this->view->render($response, 'productMain.html.twig', $args);
 });
 
-$app->post('/add_user', function (Request $request, Response $response, array $args) {
-    $this->logger->info("Slim-Skeleton '/add_user' route");
-    $register = new Register($this->db, $request, $response, $this->view);
-    if ($register->isValid()) {
-        return $register->business();
-    }
-    return $register->errorView;
-});
-
 /*
- * Routes for elasticsearch demo
+ * Routes for ElasticSearch demo
  */
 $app->post('/view_all', function (Request $request, Response $response, array $args) {
     // Sample log message
@@ -227,7 +229,7 @@ $app->post('/paging', function (Request $request, Response $response, array $arg
 });
 
 /*
- * End Routes for elasticsearch demo
+ * End Routes for ElasticSearch demo
  */
 
 $app->post('/redisdemo', function (Request $request, Response $response, array $args) {
