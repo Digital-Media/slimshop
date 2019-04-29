@@ -9,6 +9,13 @@ class Controller
      */
     protected $errorMessages;
 
+    /**
+     * A string containing a status message being set by business().
+     *
+     * @var array
+     */
+    protected $statusMessage;
+
     public function __construct($container) {
         $this->db = $container->db;
         $this->view = $container->view;
