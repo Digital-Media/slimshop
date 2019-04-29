@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: P20137
- * Date: 18.04.2019
- * Time: 10:41
- */
 
 class Controller
 {
