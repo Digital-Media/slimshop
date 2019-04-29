@@ -1,4 +1,4 @@
 /vendor/
-/templates_c/
+/templates_c/*
 /logs/*
 !/logs/README.md
