@@ -27,6 +27,7 @@ $app->get('/logout', function (Request $request, Response $response, array $args
 /*
  * /dbdemo demonstrates how form data are validated and processed
  * with the normform MVC pattern.
+ * isSubmission is done by the get and post routes.
  */
 $app->get('/dbdemo', function (Request $request, Response $response, array $args) {
     // uncomment following lines to demonstrate error_handling
@@ -84,7 +85,8 @@ $app->post('/dbslimdemo', 'DBSlimDemo:business');
  * /dbajaxdemo demonstrates how form data are validated and processed
  * with the a MVC pattern. In this case form data are sent via AJAX.
  * We no longer use NormForm but Slim Controllers and Middleware
- * but keep the normform pattern in mind to know what's going on.
+ * but keep the normform pattern in mind to know that we need validation.
+ * isSubmission is done by the get and post routes.
  */
 $app->get('/dbajaxdemo', 'DBAjaxDemo:index');
 $app->post('/dbajaxdemo', 'DBAjaxDemo:business');
