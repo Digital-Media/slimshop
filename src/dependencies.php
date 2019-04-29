@@ -22,20 +22,38 @@ $container['logger'] = function ($c) {
     return $logger;
 };
 
+$container['DBAjaxDemo'] = function ($container) {
+    return new DBAjaxDemo($container);
+};
+
+$container['DBSlimDemo'] = function ($container) {
+    return new DBSlimDemo($container);
+};
+/*
+$container['login'] = function ($container) {
+    return new Login($container);
+};
+*/
+
 // view twig renderer
-$container["view"] = function ($c) {
-    $viewSettings = $c->get("settings")["view"];
+$container["view"] = function ($container) {
+    $viewSettings = $container->get("settings")["view"];
     $view = new Twig($viewSettings["templates"], [
         "cache"       => $viewSettings["cache"],
         "auto_reload" => $viewSettings["auto_reload"]
     ]);
-    $router = $c->get("router");
+    $router = $container->get("router");
     $uri = Uri::createFromEnvironment(new Environment($_SERVER));
     $view->addExtension(new TwigExtension($router, $uri));
-    $view->getEnvironment()->addGlobal("_server", $_SERVER);
+    // No longer necessary. Replaced by routes
+    //$view->getEnvironment()->addGlobal("_server", $_SERVER);
+    /*
+     * No longer necessary. Replaced by Middleware, that uses sessions.
+     * Twig now is more secure, cause $_SERVER and $_SESSION are not registered.
     if (isset($_SESSION)) {
         $view->getEnvironment()->addGlobal("_session", $_SESSION);
     }
+    */
     return $view;
 };
 
@@ -45,8 +63,4 @@ $container['db'] = function ($c) {
     $pdo = new PDO("mysql:host=" . $db['host'] . ";dbname=" . $db['dbname'],
         $db['user'], $db['pass'], $db['options']);
     return $pdo;
-};
-
-$container['DBAjaxDemo'] = function ($container) {
-    return new DBAjaxDemo($container);
 };
