@@ -12,8 +12,8 @@
  * Class DBAccess is final, because it makes no sense to derive a class from it.
  *
  * @author  Martin Harrer <martin.harrer@fh-hagenberg.at>
- * @package onlineshop
- * @version 2018
+ * @package slimshop
+ * @version 2019
  */
 final class DBAjaxDemo extends Controller
 {
@@ -31,6 +31,7 @@ final class DBAjaxDemo extends Controller
         $args['pageArray'] = $this->fillpageArray();
         return $this->view->render($response, 'dbajaxdemoMain.html.twig', $args);
     }
+
     /**
      * Validates the user input
      *
