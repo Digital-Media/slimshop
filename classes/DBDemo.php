@@ -57,8 +57,10 @@ final class DBDemo extends DBNormForm
                 'mobile' => $this->request->getParam('mobile'),
                 'fax' => $this->request->getParam('fax'),
                 'email' => $this->request->getParam('email'),
+                'pageArray' => $this->fillPageArray(),
             );
             $this->errorView = $this->view->render($this->response, 'dbdemoMain.html.twig', $args);
+            return false;
         } else {
             return true;
         }
