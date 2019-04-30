@@ -21,6 +21,8 @@ class Controller
         $this->db = $container->db;
         $this->view = $container->view;
         $this->logger = $container->logger;
+        $this->errorMessages = [];
+        $this->statusMessage = "";
     }
 
     /**
