@@ -16,6 +16,14 @@ return [
             "level" => \Monolog\Logger::DEBUG,
         ],
 
+        "redislogger" => [
+            "name" => "slim-app-redis",
+            "host" => "localhost",
+            "port" => 6379,
+            "password" => "geheim",
+            "level" => \Monolog\Logger::DEBUG,
+        ],
+
         // Config for TWIG templates
         "view"                => [
             "templates"   => "../templates",
@@ -37,7 +45,6 @@ return [
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
                 PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8' COLLATE 'utf8_general_ci'",
                 PDO::MYSQL_ATTR_MULTI_STATEMENTS => false,
-
             ]
         ]
     ],
