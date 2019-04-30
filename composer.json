@@ -17,7 +17,9 @@
         "slim/php-view": "^2.0",
         "monolog/monolog": "^1.17",
         "twig/twig": "^2.0",
-        "slim/twig-view": "^2.4"
+        "slim/twig-view": "^2.4",
+        "predis/predis": "^1.1",
+        "elasticsearch/elasticsearch": "^6.7"
     },
     "autoload": {
         "psr-4": {
