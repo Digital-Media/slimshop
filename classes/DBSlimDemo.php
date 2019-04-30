@@ -77,12 +77,9 @@ final class DBSlimDemo extends Controller
                 "pageArray" => $this->fillPageArray(),
             ];
         } else {
+            $args = $this->returnInputParams($request);
             $args['errorMessages'] = $this->errorMessages;
             $args['pageArray'] = $this->fillPageArray();
-            $params = $request->getParams();
-            foreach ($params as $param => $value) {
-                $args[$param]= $value;
-            }
         }
         return $this->view->render($response, 'dbslimdemoMain.html.twig', $args);
     }
