@@ -16,7 +16,8 @@ class Controller
      */
     protected $statusMessage;
 
-    public function __construct($container) {
+    public function __construct($container)
+    {
         $this->db = $container->db;
         $this->view = $container->view;
         $this->logger = $container->logger;
@@ -33,4 +34,18 @@ class Controller
         return (!($request->getParam($index)) || strlen(trim($request->getParam($index))) === 0);
     }
 
+    /*
+     * Returns all values filled by user in form input fields
+     * Done bei class View in normform
+     * normform View has been replaced bei slim/View, that doesn't support returning params on its own
+     */
+    protected function returnInputParams($request): array
+    {
+        $params = $request->getParams();
+        foreach ($params as $param => $value) {
+            $args[$param] = $value;
+
+        }
+        return $args;
+    }
 }
