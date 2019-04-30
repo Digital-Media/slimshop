@@ -8,9 +8,13 @@
  *
  * These methods can be accessed with Utilities::method() in any context
  *
+ * @see https://www.owasp.org/index.php/OWASP_Validation_Regex_Repository OWASP provides a set of vetted regex for
+ * the most important use cases: email, url, ...
+ * Though they are not built for a particular Regex engine, they are worth  looking at.
+ *
  * @author  Wolfgang Hochleitner <wolfgang.hochleitner@fh-hagenberg.at>
  * @author  Martin Harrer <martin.harrer@fh-hagenberg.at>
- * @version 2017
+ * @version 2019
  */
 trait Utilities
 {
@@ -146,35 +150,6 @@ trait Utilities
     public static function isEmptyString(string $string): bool
     {
         return (mb_strlen(trim($string)) === 0);
-    }
-
-    /**
-     * Quick and dirty method for replacing the most common umlauts in a string with regular ASCII characters.
-     * Useful when dealing with file names that are provided by the file system. Windows actually delivers e.g. an "ä",
-     * whereas MacOS does a diaeresis of a and two dots, which is seen as e.g. \x61\xcc\x88
-     *
-     * @param  string $string The input string where replacements should be performed.
-     * @return string A string without umlauts.
-     */
-    public static function replaceUmlauts(string $string): string
-    {
-        $charReplace = [
-            "ä" => "ae",
-            "\x61\xcc\x88" => "ae",
-            "Ä" => "Ae",
-            "\x41\xcc\x88" => "Ae",
-            "ö" => "oe",
-            "\x6f\xcc\x88" => "oe",
-            "Ö" => "Oe",
-            "\x4f\xcc\x88" => "Oe",
-            "ü" => "ue",
-            "\x75\xcc\x88" => "ue",
-            "Ü" => "Ue",
-            "\x55\xcc\x88" => "Ue",
-            "ß" => "ss",
-            " " => "_"
-        ];
-        return strtr($string, $charReplace);
     }
 
     /**
